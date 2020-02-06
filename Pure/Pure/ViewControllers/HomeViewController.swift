@@ -21,10 +21,11 @@ class HomeViewController: UIViewController {
         /// Background Color Base on specific unique colors patern
         self.view.backgroundColor = #colorLiteral(red: 0.1058706865, green: 0.1058889255, blue: 0.1058644727, alpha: 1)
         
-//         motivationLabelSetUP()
-
-        
+/// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
        motivationLabelSetUP()
+        
+        ///this functio ncreates save button and assing constraints
+        saveButtonSetUP()
        
         
         
@@ -58,15 +59,42 @@ class HomeViewController: UIViewController {
     
     
     
+    // MARK: -> UIButton
+    
+    lazy var saveButton: UIButton = {
+       
+        let  saveButton = UIButton(frame: .zero)
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.backgroundColor = .green
+        
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        return saveButton
+    }()
+    
+    
+    
 
 
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 extension HomeViewController {
     
     
-    /// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
+    
     func motivationLabelSetUP() {
         
         
@@ -86,6 +114,29 @@ extension HomeViewController {
            ])
         
     }
+    
+    
+    
+    
+        func saveButtonSetUP() {
+            
+            
+            // MARK: -> Adding motivation logo to view, and setting constraints.
+                view.addSubview(saveButton)
+               NSLayoutConstraint.activate([
+             
+                   // width, height constraints
+                saveButton.widthAnchor.constraint(equalToConstant: 100),
+                saveButton.heightAnchor.constraint(equalToConstant: 100),
+                // x, y constraints
+//                saveButton.topAnchor.constraint(equalTo: motivationLabelContainer.topAnchor, constant: 400),
+                // tralling and leading constraints
+//                saveButton.leadingAnchor.constraint(equalTo: self.motivationLabelContainer.leadingAnchor, constant: 200),
+                saveButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
+                saveButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+               ])
+            
+        }
     
     
     
