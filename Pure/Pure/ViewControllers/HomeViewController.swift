@@ -10,27 +10,61 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    
-    
+    // Dummy DataBase of Motivational quiotes
 
+    var list: [String] = ["Whenever you're struggling to get things done, turn to this list of quotes for the inspiration and motivation you need to be the best you can be."]
+    
+    // random unique colors
+    var colors: [String: UIColor] = ["red": .red, "pink": .systemPink, "blue": .blue ]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         // MARK: -> View BackGroundColor.
         /// Background Color Base on specific unique colors patern
-        self.view.backgroundColor = #colorLiteral(red: 0.1058706865, green: 0.1058889255, blue: 0.1058644727, alpha: 1)
+        self.view.backgroundColor = #colorLiteral(red: 0.06983517855, green: 0.07453668863, blue: 0.08315380663, alpha: 1)
         
-/// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
-       motivationLabelSetUP()
+        /// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
+        motivationLabelSetUP()
         
         ///this functio ncreates save button and assing constraints
         saveButtonSetUP()
-       
+        
         
         
         
     }
+    
+    
+    
+    // MARK: -> Global Function
+    
+    private func quoteSelectionSetting(arrayOfQuotes list: Array<String>) {
+        // empty array of
+        var usedQuote = [String]()
+        
+        // looping over entire list of quotes.
+        for quoite in list {
+            // checking to see if the selected quote havent already been used.
+            if usedQuote.contains(quoite) {
+                // re-randomized array and re-call this function.
+                self.list.shuffle() // shuffling our array because the quote selected have already been used.
+                continue // re-running function.
+            } else {
+                // if quote have'nt alreay been used, display it and append it to our list.
+                // porpulate model
+                usedQuote.append(quoite)
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    
     
     
     // MARK: -> UILabel
@@ -38,10 +72,8 @@ class HomeViewController: UIViewController {
     lazy var motivationLabelContainer: UILabel = {
         let motivationLabel = UILabel()
         motivationLabel.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 0)
-        motivationLabel.text = """
-        Those who wish to achieve greatness, never seek for permissions. They follow what their heart says, and do what their mind states!
-        """
-        motivationLabel.textColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        motivationLabel.text = "\(list[0])" // pass model down here 
+        motivationLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
         motivationLabel.font = UIFont(name: "AmericanTypewriter", size: 18)
         motivationLabel.textAlignment = .center
         
@@ -53,7 +85,7 @@ class HomeViewController: UIViewController {
         
         
         motivationLabel.translatesAutoresizingMaskIntoConstraints = false
-    
+        
         return motivationLabel
     }()
     
@@ -62,20 +94,33 @@ class HomeViewController: UIViewController {
     // MARK: -> UIButton
     
     lazy var saveButton: UIButton = {
-       
+        
         let  saveButton = UIButton(frame: .zero)
         saveButton.setTitle("Save", for: .normal)
-        saveButton.backgroundColor = .green
-        
+        saveButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
+        saveButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: UIControl.State.normal)
+        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
+        saveButton.addTarget(self, action: #selector(saveButonPressed), for: .touchUpInside)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        // styling
+        saveButton.layer.cornerRadius =  50
         
         return saveButton
     }()
     
     
+    @objc func saveButonPressed() {
+        
+        // save image to user device.
+        print("Motivation save to user device...")
+        
+    }
     
-
-
+    
+    
+    
+    
 }
 
 
@@ -99,44 +144,45 @@ extension HomeViewController {
         
         
         // MARK: -> Adding motivation logo to view, and setting constraints.
-            view.addSubview(motivationLabelContainer)
-           NSLayoutConstraint.activate([
-         
-               // width, height constraints
+        view.addSubview(motivationLabelContainer)
+        NSLayoutConstraint.activate([
+            
+            // width, height constraints
             motivationLabelContainer.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2 + self.view.frame.size.width / 3 ),
             motivationLabelContainer.heightAnchor.constraint(equalToConstant: self.view.frame.size.height / 4),
             // x, y constraints
-                     motivationLabelContainer.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-                     motivationLabelContainer.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            motivationLabelContainer.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+            motivationLabelContainer.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             // tralling and leading constraints
-//            motivationLabelContainer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
-//            motivationLabelContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
-           ])
+            //            motivationLabelContainer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 0),
+            //            motivationLabelContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: 0)
+        ])
         
     }
     
     
     
     
-        func saveButtonSetUP() {
+    func saveButtonSetUP() {
+        
+        
+        // MARK: -> Adding motivation logo to view, and setting constraints.
+        view.addSubview(saveButton)
+        
+        NSLayoutConstraint.activate([
             
-            
-            // MARK: -> Adding motivation logo to view, and setting constraints.
-                view.addSubview(saveButton)
-               NSLayoutConstraint.activate([
-             
-                   // width, height constraints
-                saveButton.widthAnchor.constraint(equalToConstant: 100),
-                saveButton.heightAnchor.constraint(equalToConstant: 100),
-                // x, y constraints
-//                saveButton.topAnchor.constraint(equalTo: motivationLabelContainer.topAnchor, constant: 400),
-                // tralling and leading constraints
-//                saveButton.leadingAnchor.constraint(equalTo: self.motivationLabelContainer.leadingAnchor, constant: 200),
-                saveButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
-                saveButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
-               ])
-            
-        }
+            // width, height constraints
+            saveButton.widthAnchor.constraint(equalToConstant: 100),
+            saveButton.heightAnchor.constraint(equalToConstant: 100),
+            // x, y constraints
+            //                saveButton.topAnchor.constraint(equalTo: motivationLabelContainer.topAnchor, constant: 400),
+            // tralling and leading constraints
+            //                saveButton.leadingAnchor.constraint(equalTo: self.motivationLabelContainer.leadingAnchor, constant: 200),
+            saveButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
+            saveButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+        ])
+        
+    }
     
     
     
