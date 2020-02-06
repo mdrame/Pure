@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		7789811923EC0E22004DE4DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7789811823EC0E22004DE4DB /* AppDelegate.swift */; };
 		7789811B23EC0E22004DE4DB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7789811A23EC0E22004DE4DB /* SceneDelegate.swift */; };
-		7789811D23EC0E22004DE4DB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7789811C23EC0E22004DE4DB /* ViewController.swift */; };
+		7789811D23EC0E22004DE4DB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7789811C23EC0E22004DE4DB /* HomeViewController.swift */; };
 		7789812023EC0E22004DE4DB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7789811E23EC0E22004DE4DB /* Main.storyboard */; };
 		7789812223EC0E24004DE4DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7789812123EC0E24004DE4DB /* Assets.xcassets */; };
 		7789812523EC0E24004DE4DB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7789812323EC0E24004DE4DB /* LaunchScreen.storyboard */; };
+		7789813123EC2036004DE4DB /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7789813023EC2036004DE4DB /* Fonts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7789811523EC0E22004DE4DB /* Pure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pure.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7789811823EC0E22004DE4DB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7789811A23EC0E22004DE4DB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7789811C23EC0E22004DE4DB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		7789811C23EC0E22004DE4DB /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7789811F23EC0E22004DE4DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7789812123EC0E24004DE4DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7789812423EC0E24004DE4DB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7789812623EC0E24004DE4DB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7789813023EC2036004DE4DB /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +60,46 @@
 			children = (
 				7789811823EC0E22004DE4DB /* AppDelegate.swift */,
 				7789811A23EC0E22004DE4DB /* SceneDelegate.swift */,
-				7789811C23EC0E22004DE4DB /* ViewController.swift */,
-				7789811E23EC0E22004DE4DB /* Main.storyboard */,
+				7789812E23EC0F4D004DE4DB /* Models */,
+				7789812F23EC0F59004DE4DB /* Views */,
+				7789812D23EC0F2A004DE4DB /* ViewControllers */,
+				7789812C23EC0F18004DE4DB /* StoryBoard */,
 				7789812123EC0E24004DE4DB /* Assets.xcassets */,
 				7789812323EC0E24004DE4DB /* LaunchScreen.storyboard */,
 				7789812623EC0E24004DE4DB /* Info.plist */,
 			);
 			path = Pure;
+			sourceTree = "<group>";
+		};
+		7789812C23EC0F18004DE4DB /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
+				7789811E23EC0E22004DE4DB /* Main.storyboard */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		7789812D23EC0F2A004DE4DB /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7789811C23EC0E22004DE4DB /* HomeViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		7789812E23EC0F4D004DE4DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7789813023EC2036004DE4DB /* Fonts.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7789812F23EC0F59004DE4DB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,7 +173,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7789811D23EC0E22004DE4DB /* ViewController.swift in Sources */,
+				7789813123EC2036004DE4DB /* Fonts.swift in Sources */,
+				7789811D23EC0E22004DE4DB /* HomeViewController.swift in Sources */,
 				7789811923EC0E22004DE4DB /* AppDelegate.swift in Sources */,
 				7789811B23EC0E22004DE4DB /* SceneDelegate.swift in Sources */,
 			);
@@ -294,7 +330,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.modrame.herokuapp.Pure;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -312,7 +348,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.modrame.herokuapp.Pure;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
