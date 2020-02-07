@@ -4,7 +4,7 @@
 
 
 ### Pure
-  * Pure is a motivational app. provide hand picked  motivation quote every day of the year.
+  * Pure is a motivational app. Hand picked motivational quote every day of the year.
   * Works with out internet
   * Quotes never repeat
   * Simple, and elegent designed
