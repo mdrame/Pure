@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UserNotifications
 
 class HomeViewController: UIViewController {
     
@@ -41,9 +42,21 @@ class HomeViewController: UIViewController {
         quoteSelectionSetting(arrayOfQuotes: dataSet.setQuotes() )
         
         ///this functio ncreates save button and assing constraints
-        saveButtonSetUP()
+        likeButtonSetUP()
         /// save button animation
-        saveButton.pulsate()
+        likeButtonContiner.pulsate()
+        
+       /// this function is creating notification base on user selected timmer or time zone.
+        userNotification()
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         
@@ -76,6 +89,44 @@ class HomeViewController: UIViewController {
         }
         
     }
+    
+    // MARK: -> UNNotification UserNotification
+    
+    func userNotification() {
+         // Notification class
+                let center = UNUserNotificationCenter.current()
+                center.removeAllPendingNotificationRequests()
+                
+                // Getting user approval
+                center.requestAuthorization(options: [.alert, .badge, .sound]) { (isGranted, error) in
+                    if isGranted {
+                        print("Yay! User granded our notification")
+                    } else {
+                        print("Nope! User decline to show notification")
+                    }
+                }
+                
+                // Adding content to notification class
+                 let content = UNMutableNotificationContent()
+        //        content.title = "Motivation"
+                content.body = "Keep your head up"
+                content.categoryIdentifier = "Alarm"
+                content.sound = .default
+                
+                // Triger for notification
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+              
+                
+                // Combine identifier, content and trigger
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                
+                // Add notification
+                center.add(request)
+                
+    }
+    
+    
+    
     
     // Code from Paul Hudson -> Hacking with swift
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -111,21 +162,22 @@ class HomeViewController: UIViewController {
     
     // MARK: -> UIButton
     
-    lazy var saveButton: UIButton = {
+    lazy var likeButtonContiner: UIButton = {
         
-        let  saveButton = UIButton(frame: .zero)
-        saveButton.setTitle("Save", for: .normal)
+        let  likeButton = UIButton(frame: .zero)
+        likeButton.setTitle("Save", for: .normal)
         // Ask mutchell about mind relaxation color
-        saveButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-        saveButton.setTitleColor(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), for: UIControl.State.normal)
-        saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
-        saveButton.addTarget(self, action: #selector(saveButonPressed), for: .touchUpInside)
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        likeButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        likeButton.setTitleColor(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), for: UIControl.State.normal)
+        likeButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
+        likeButton.addTarget(self, action: #selector(saveButonPressed), for: .touchUpInside)
+        likeButton.translatesAutoresizingMaskIntoConstraints = false
         
         // styling
-        saveButton.layer.cornerRadius =  50
+        likeButton.layer.cornerRadius =  50
         
-        return saveButton
+        
+        return likeButton
     }()
     
     
@@ -182,23 +234,23 @@ extension HomeViewController {
     
     
     
-    func saveButtonSetUP() {
+    func likeButtonSetUP() {
         
         
         // MARK: -> Adding motivation logo to view, and setting constraints.
-        view.addSubview(saveButton)
+        view.addSubview(likeButtonContiner)
         
         NSLayoutConstraint.activate([
             
             // width, height constraints
-            saveButton.widthAnchor.constraint(equalToConstant: 100),
-            saveButton.heightAnchor.constraint(equalToConstant: 100),
+            likeButtonContiner.widthAnchor.constraint(equalToConstant: 100),
+            likeButtonContiner.heightAnchor.constraint(equalToConstant: 100),
             // x, y constraints
             //                saveButton.topAnchor.constraint(equalTo: motivationLabelContainer.topAnchor, constant: 400),
             // tralling and leading constraints
             //                saveButton.leadingAnchor.constraint(equalTo: self.motivationLabelContainer.leadingAnchor, constant: 200),
-            saveButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
-            saveButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+            likeButtonContiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
+            likeButtonContiner.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
         ])
         
     }
