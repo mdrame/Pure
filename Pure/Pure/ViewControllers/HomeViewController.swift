@@ -12,19 +12,18 @@ class HomeViewController: UIViewController {
     
     
     // MARK: -> Global Variables
+    
     var dataSet = DataSet()
-   
+    
     
     // Dummy DataBase of Motivational quiotes
-
-    var list: [QuotesModel] = [QuotesModel]()
-//    var list: [String] = ["Whenever you're struggling to get things done, turn to this list of quotes for the inspiration and motivation you need to be the best you can be.", "You look at things you enjoy in your life, but much more important is what you can do to make the world a better place", "There have to be reasons that you get up in the morning and you want to live"]
+    //    var list: [String] = ["Whenever you're struggling to get things done, turn to this list of quotes for the inspiration and motivation you need to be the best you can be.", "You look at things you enjoy in your life, but much more important is what you can do to make the world a better place", "There have to be reasons that you get up in the morning and you want to live"]
     
     // random unique colors
     var colors: [String: UIColor] = ["red": .red, "pink": .systemPink, "blue": .blue ]
     
     
-
+    
     // MARK: -> ViewDidLoad
     
     override func viewDidLoad() {
@@ -39,19 +38,19 @@ class HomeViewController: UIViewController {
         motivationLabelSetUP()
         
         /// This function is cheking to see if our current quote have already ben used, if yes than we re-run the function to make sure we get a quote that hav'nt been used before.
-              quoteSelectionSetting(arrayOfQuotes: dataSet.setQuotes() )
+        quoteSelectionSetting(arrayOfQuotes: dataSet.setQuotes() )
         
         ///this functio ncreates save button and assing constraints
         saveButtonSetUP()
         
         
-      
+        
     }
     
     
     // MARK: -> Global Function
     
-     func quoteSelectionSetting(arrayOfQuotes ourList: Array<QuotesModel>) {
+    func quoteSelectionSetting(arrayOfQuotes ourList: Array<QuotesModel>) {
         // empty array of
         var usedQuote = [String]()
         var randomObject = Int.random(in: 0..<ourList.count)
@@ -62,7 +61,7 @@ class HomeViewController: UIViewController {
             // checking to see if the selected quote havent already been used.
             if usedQuote.contains(ourList[randomObject].quote) {
                 // re-randomized array and re-call this function.
-                self.list.shuffle() // shuffling our array because the quote selected have already been used.
+                self.dataSet.quoteModel.shuffle()// shuffling our array because the quote selected have already been used.
                 continue // re-running function.
             } else {
                 // if quote have'nt alreay been used, update model with un-use quote.
@@ -78,7 +77,7 @@ class HomeViewController: UIViewController {
     
     
     
-
+    
     // MARK: -> UILabel
     
     lazy var motivationLabelContainer: UILabel = {
