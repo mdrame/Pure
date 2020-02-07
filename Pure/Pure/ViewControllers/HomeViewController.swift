@@ -31,7 +31,7 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // MARK: -> View BackGroundColor.
-        /// Background Color Base on specific unique colors patern
+        /// Background Color Base on specific unique colors patern / get Mechell input
         self.view.backgroundColor = #colorLiteral(red: 0.06983517855, green: 0.07453668863, blue: 0.08315380663, alpha: 1)
         
         /// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
