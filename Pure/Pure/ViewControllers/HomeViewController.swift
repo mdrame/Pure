@@ -75,6 +75,11 @@ class HomeViewController: UIViewController {
         
     }
     
+    // Code from Paul Hudson -> Hacking with swift
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
     
     
     
