@@ -58,7 +58,7 @@ class DataSet {
     // third ten ( last then days of a month )
     QuotesModel(quote: "Life is hard but you gotto keep you heads up !!!! ", date: "Today", likeStatus: true),
        QuotesModel(quote: "If you're going through hell keep going.", date: "Yesterday", likeStatus: false),
-    QuotesModel(quote: "The ones who are crazy enough to think they can change the world, are the ones who do.", date: "Yesterday", likeStatus: false)
+    QuotesModel(quote: "The ones who are crazy enough to think they can change the world, are the ones who do.", date: "Yesterday", likeStatus: false),
       QuotesModel(quote: "Don't raise your voice, improve your argument." , date: "Yesterday", likeStatus: false),
       QuotesModel(quote: "What seems to us as bitter trials are often blessings in disguise." , date: "Yesterday", likeStatus: false),
        QuotesModel(quote: "The meaning of life is to find your gift. The purpose of life is to give it away.", date: "Yesterday", likeStatus: false),

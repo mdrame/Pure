@@ -42,6 +42,8 @@ class HomeViewController: UIViewController {
         
         ///this functio ncreates save button and assing constraints
         saveButtonSetUP()
+        /// save button animation
+        saveButton.pulsate()
         
         
         
@@ -89,7 +91,8 @@ class HomeViewController: UIViewController {
         let motivationLabel = UILabel()
         motivationLabel.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 0)
         motivationLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0.5)
-        motivationLabel.font = UIFont(name: "AmericanTypewriter", size: 18)
+        // font to be change with an enums of fonts base on days / months.
+        motivationLabel.font = UIFont(name: "Arial", size: 18)
         motivationLabel.textAlignment = .center
         
         motivationLabel.numberOfLines = 0
@@ -112,8 +115,9 @@ class HomeViewController: UIViewController {
         
         let  saveButton = UIButton(frame: .zero)
         saveButton.setTitle("Save", for: .normal)
-        saveButton.backgroundColor = #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1)
-        saveButton.setTitleColor(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1), for: UIControl.State.normal)
+        // Ask mutchell about mind relaxation color
+        saveButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        saveButton.setTitleColor(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), for: UIControl.State.normal)
         saveButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
         saveButton.addTarget(self, action: #selector(saveButonPressed), for: .touchUpInside)
         saveButton.translatesAutoresizingMaskIntoConstraints = false
