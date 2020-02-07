@@ -67,7 +67,7 @@ class HomeViewController: UIViewController {
                 // if quote have'nt alreay been used, update model with un-use quote.
                 // porpulate model
                 usedQuote.append(ourList[randomObject].quote)
-                print("Used Quote: \(usedQuote)")
+                print("Selected Quote: \(usedQuote)")
                 motivationLabelContainer.text = ourList[randomObject].quote
                 
             }
