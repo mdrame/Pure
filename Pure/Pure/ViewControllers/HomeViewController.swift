@@ -44,7 +44,7 @@ class HomeViewController: UIViewController {
         ///this functio ncreates save button and assing constraints
         likeButtonSetUP()
         /// save button animation
-        likeButtonContiner.pulsate()
+        shareButtonContainer.pulsate()
         
        /// this function is creating notification base on user selected timmer or time zone.
         userNotification()
@@ -127,7 +127,7 @@ class HomeViewController: UIViewController {
     
     
     
-    
+    // MARK: -> Status Bar
     // Code from Paul Hudson -> Hacking with swift
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -162,29 +162,30 @@ class HomeViewController: UIViewController {
     
     // MARK: -> UIButton
     
-    lazy var likeButtonContiner: UIButton = {
+    lazy var shareButtonContainer: UIButton = {
         
-        let  likeButton = UIButton(frame: .zero)
-        likeButton.setTitle("Save", for: .normal)
+        let  shareButton = UIButton(frame: .zero)
+        shareButton.setTitle("Share", for: .normal)
         // Ask mutchell about mind relaxation color
-        likeButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
-        likeButton.setTitleColor(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), for: UIControl.State.normal)
-        likeButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
-        likeButton.addTarget(self, action: #selector(saveButonPressed), for: .touchUpInside)
-        likeButton.translatesAutoresizingMaskIntoConstraints = false
+        shareButton.backgroundColor = #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1)
+        shareButton.setTitleColor(#colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1), for: UIControl.State.normal)
+        shareButton.titleLabel?.font = UIFont.systemFont(ofSize: 30)
+        shareButton.addTarget(self, action: #selector(shareButtonPress), for: .touchUpInside)
+        shareButton.translatesAutoresizingMaskIntoConstraints = false
         
         // styling
-        likeButton.layer.cornerRadius =  50
+        shareButton.layer.cornerRadius =  50
         
         
-        return likeButton
+        return shareButton
     }()
     
     
-    @objc func saveButonPressed() {
+    @objc func shareButtonPress() {
         
         // save image to user device.
-        print("Motivation save to user device...")
+        let activityController = UIActivityViewController(activityItems: ["My name is Mohammed"], applicationActivities: [])
+        present(activityController, animated: true, completion: nil)
         
     }
     
@@ -238,19 +239,19 @@ extension HomeViewController {
         
         
         // MARK: -> Adding motivation logo to view, and setting constraints.
-        view.addSubview(likeButtonContiner)
+        view.addSubview(shareButtonContainer)
         
         NSLayoutConstraint.activate([
             
             // width, height constraints
-            likeButtonContiner.widthAnchor.constraint(equalToConstant: 100),
-            likeButtonContiner.heightAnchor.constraint(equalToConstant: 100),
+            shareButtonContainer.widthAnchor.constraint(equalToConstant: 100),
+            shareButtonContainer.heightAnchor.constraint(equalToConstant: 100),
             // x, y constraints
             //                saveButton.topAnchor.constraint(equalTo: motivationLabelContainer.topAnchor, constant: 400),
             // tralling and leading constraints
             //                saveButton.leadingAnchor.constraint(equalTo: self.motivationLabelContainer.leadingAnchor, constant: 200),
-            likeButtonContiner.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
-            likeButtonContiner.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+            shareButtonContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
+            shareButtonContainer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
         ])
         
     }
