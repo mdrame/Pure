@@ -23,10 +23,6 @@ class HomeViewController: UIViewController {
     }
     
     
-    
-    // Dummy DataBase of Motivational quiotes
-    //    var list: [String] = ["Whenever you're struggling to get things done, turn to this list of quotes for the inspiration and motivation you need to be the best you can be.", "You look at things you enjoy in your life, but much more important is what you can do to make the world a better place", "There have to be reasons that you get up in the morning and you want to live"]
-    
     // random unique colors
     var colors: [String: UIColor] = ["red": .red, "pink": .systemPink, "blue": .blue ]
     
@@ -61,18 +57,7 @@ class HomeViewController: UIViewController {
         
         /// this function is creating notification base on user selected timmer or time zone.
         //        userNotification()
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+           
     }
     
     
@@ -127,6 +112,7 @@ class HomeViewController: UIViewController {
         content.sound = .default
         
         // Triger for notification
+        // Time interver will be eqal to segmented control current value, segmented current value will be decided base on randomly selecting a time frame. example will be afternoon is b/w 1-50. trigger value will be base on a random value b/w that number.
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
         
         
@@ -189,9 +175,9 @@ class HomeViewController: UIViewController {
         // An array of constraints
         NSLayoutConstraint.activate(
             [
-                timerButtonContiner.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+                timerButtonContiner.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
                 timerButtonContiner.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-                timerButtonContiner.widthAnchor.constraint(equalToConstant: view.frame.size.width / 7),
+                timerButtonContiner.widthAnchor.constraint(equalToConstant: view.frame.size.width / 6),
                 timerButtonContiner.heightAnchor.constraint(equalToConstant: 59)
             ]
         )
@@ -283,7 +269,7 @@ class HomeViewController: UIViewController {
     @objc func shareButtonPress() {
         
         // save image to user device.
-        let activityController = UIActivityViewController(activityItems: ["My name is Mohammed"], applicationActivities: [])
+        let activityController = UIActivityViewController(activityItems: ["App Test:"], applicationActivities: nil)
         present(activityController, animated: true, completion: nil)
         
     }
