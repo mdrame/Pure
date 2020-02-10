@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     var dataSet = DataSet()
     
     
+    
     // Dummy DataBase of Motivational quiotes
     //    var list: [String] = ["Whenever you're struggling to get things done, turn to this list of quotes for the inspiration and motivation you need to be the best you can be.", "You look at things you enjoy in your life, but much more important is what you can do to make the world a better place", "There have to be reasons that you get up in the morning and you want to live"]
     
@@ -35,6 +36,9 @@ class HomeViewController: UIViewController {
         /// Background Color Base on specific unique colors patern / get Mechell input
         self.view.backgroundColor = #colorLiteral(red: 0.06983517855, green: 0.07453668863, blue: 0.08315380663, alpha: 1)
         
+        /// this function adds the button to the view and set constraints
+        timerButtonSetUP()
+        
         /// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
         motivationLabelSetUP()
         
@@ -42,12 +46,12 @@ class HomeViewController: UIViewController {
         quoteSelectionSetting(arrayOfQuotes: dataSet.setQuotes() )
         
         ///this functio ncreates save button and assing constraints
-        likeButtonSetUP()
+        shareButtonConstraints()
         /// save button animation
         shareButtonContainer.pulsate()
         
-       /// this function is creating notification base on user selected timmer or time zone.
-        userNotification()
+        /// this function is creating notification base on user selected timmer or time zone.
+        //        userNotification()
         
         
         
@@ -93,36 +97,36 @@ class HomeViewController: UIViewController {
     // MARK: -> UNNotification UserNotification
     
     func userNotification() {
-         // Notification class
-                let center = UNUserNotificationCenter.current()
-                center.removeAllPendingNotificationRequests()
-                
-                // Getting user approval
-                center.requestAuthorization(options: [.alert, .badge, .sound]) { (isGranted, error) in
-                    if isGranted {
-                        print("Yay! User granded our notification")
-                    } else {
-                        print("Nope! User decline to show notification")
-                    }
-                }
-                
-                // Adding content to notification class
-                 let content = UNMutableNotificationContent()
+        // Notification class
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+        
+        // Getting user approval
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (isGranted, error) in
+            if isGranted {
+                print("Yay! User granded our notification")
+            } else {
+                print("Nope! User decline to show notification")
+            }
+        }
+        
+        // Adding content to notification class
+        let content = UNMutableNotificationContent()
         //        content.title = "Motivation"
-                content.body = "Keep your head up"
-                content.categoryIdentifier = "Alarm"
-                content.sound = .default
-                
-                // Triger for notification
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
-              
-                
-                // Combine identifier, content and trigger
-                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-                
-                // Add notification
-                center.add(request)
-                
+        content.body = "Keep your head up"
+        content.categoryIdentifier = "Alarm"
+        content.sound = .default
+        
+        // Triger for notification
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        
+        
+        // Combine identifier, content and trigger
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        // Add notification
+        center.add(request)
+        
     }
     
     
@@ -131,6 +135,51 @@ class HomeViewController: UIViewController {
     // Code from Paul Hudson -> Hacking with swift
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    
+    
+    
+    
+    // MARK: -> VIEWS
+    
+    
+    // MARK: -> Timing Button
+    lazy var timerButtonContiner: UIButton = {
+        let timerButton = UIButton(frame: .zero)
+        //        timerButton.backgroundColor = .yellow
+        timerButton.setImage(#imageLiteral(resourceName: "icons8-timer-100"), for: .normal)
+        timerButton.adjustsImageSizeForAccessibilityContentSizeCategory = true
+        timerButton.translatesAutoresizingMaskIntoConstraints = false
+        timerButton.addTarget(self, action: #selector(timerButtonPress), for: .touchUpInside)
+        
+        // Styling
+        timerButton.layer.shadowRadius = 10.0
+        timerButton.layer.shadowColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
+        timerButton.layer.shadowOffset = CGSize(width: 5, height: 5)
+//        timerButton.layer.shadowOpacity = 0.5;
+        timerButton.layer.masksToBounds = true
+        return timerButton
+        
+    }()
+    
+    // MARK: -> Timing Button Constraints
+    @objc func timerButtonPress() {
+        print("Timer button pressed")
+    }
+    
+    
+    // Timer button setup and constraints
+    func timerButtonSetUP() {
+        view.addSubview(timerButtonContiner)
+        // An array of constraints
+        NSLayoutConstraint.activate(
+            [
+                timerButtonContiner.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+                timerButtonContiner.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+                timerButtonContiner.widthAnchor.constraint(equalToConstant: view.frame.size.width / 7),
+                timerButtonContiner.heightAnchor.constraint(equalToConstant: 59)
+            ]
+        )
     }
     
     
@@ -180,12 +229,35 @@ class HomeViewController: UIViewController {
         return shareButton
     }()
     
-    
+    // This function share the current Motivation quote.
     @objc func shareButtonPress() {
         
         // save image to user device.
         let activityController = UIActivityViewController(activityItems: ["My name is Mohammed"], applicationActivities: [])
         present(activityController, animated: true, completion: nil)
+        
+    }
+    
+    
+    // share button swetup and constratinsts
+    func shareButtonConstraints() {
+        
+        
+        // MARK: -> Adding motivation logo to view, and setting constraints.
+        view.addSubview(shareButtonContainer)
+        
+        NSLayoutConstraint.activate([
+            
+            // width, height constraints
+            shareButtonContainer.widthAnchor.constraint(equalToConstant: 100),
+            shareButtonContainer.heightAnchor.constraint(equalToConstant: 100),
+            // x, y constraints
+            //                saveButton.topAnchor.constraint(equalTo: motivationLabelContainer.topAnchor, constant: 400),
+            // tralling and leading constraints
+            //                saveButton.leadingAnchor.constraint(equalTo: self.motivationLabelContainer.leadingAnchor, constant: 200),
+            shareButtonContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
+            shareButtonContainer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
+        ])
         
     }
     
@@ -211,7 +283,7 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     
     
-    
+    // Motivation label setup and constraints
     func motivationLabelSetUP() {
         
         
@@ -235,26 +307,6 @@ extension HomeViewController {
     
     
     
-    func likeButtonSetUP() {
-        
-        
-        // MARK: -> Adding motivation logo to view, and setting constraints.
-        view.addSubview(shareButtonContainer)
-        
-        NSLayoutConstraint.activate([
-            
-            // width, height constraints
-            shareButtonContainer.widthAnchor.constraint(equalToConstant: 100),
-            shareButtonContainer.heightAnchor.constraint(equalToConstant: 100),
-            // x, y constraints
-            //                saveButton.topAnchor.constraint(equalTo: motivationLabelContainer.topAnchor, constant: 400),
-            // tralling and leading constraints
-            //                saveButton.leadingAnchor.constraint(equalTo: self.motivationLabelContainer.leadingAnchor, constant: 200),
-            shareButtonContainer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -60),
-            shareButtonContainer.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -50)
-        ])
-        
-    }
     
     
     
