@@ -15,6 +15,12 @@ class HomeViewController: UIViewController {
     // MARK: -> Global Variables
     
     var dataSet = DataSet()
+    /// Turing segmented control on and off base on the button press toggle switch ever time the button is pressed
+    var buttonPress : Bool = true {
+        willSet {
+            segmentedControlContainer.isHidden = newValue
+        }
+    }
     
     
     
@@ -38,6 +44,9 @@ class HomeViewController: UIViewController {
         
         /// this function adds the button to the view and set constraints
         timerButtonSetUP()
+        
+        
+        segmentedControlSetUP()
         
         /// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
         motivationLabelSetUP()
@@ -156,15 +165,20 @@ class HomeViewController: UIViewController {
         timerButton.layer.shadowRadius = 10.0
         timerButton.layer.shadowColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1)
         timerButton.layer.shadowOffset = CGSize(width: 5, height: 5)
-//        timerButton.layer.shadowOpacity = 0.5;
+        //        timerButton.layer.shadowOpacity = 0.5;
         timerButton.layer.masksToBounds = true
         return timerButton
         
     }()
     
     // MARK: -> Timing Button Constraints
+    
     @objc func timerButtonPress() {
-        print("Timer button pressed")
+        
+        
+        buttonPress.toggle()
+        print("Segmented Bar is on: \(buttonPress)")
+       
     }
     
     
@@ -181,6 +195,40 @@ class HomeViewController: UIViewController {
             ]
         )
     }
+    
+    // MARK: -> UISegmented Control
+    /// This function establish and add the segmented control to the screen and set constraints
+    lazy var segmentedControlContainer: UISegmentedControl = {
+        let segmentedControl = UISegmentedControl(items: ["Morning", "AftrNoone", "Night"])
+        segmentedControl.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.selectedSegmentTintColor = #colorLiteral(red: 0.8999300599, green: 0, blue: 0.2961923778, alpha: 1)
+        segmentedControl.isHidden = true // Hide segmented control as screen startes
+        segmentedControl.translatesAutoresizingMaskIntoConstraints =  false
+        return segmentedControl
+        
+    }()
+    
+    
+    
+    
+    func segmentedControlSetUP() {
+        view.addSubview(segmentedControlContainer)
+        
+        NSLayoutConstraint.activate([
+            // Center in view
+//            segmentedControlContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            segmentedControlContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            // Top Acher
+            segmentedControlContainer.topAnchor.constraint(equalToSystemSpacingBelow: timerButtonContiner.topAnchor, multiplier: 10),
+            // width and height
+            segmentedControlContainer.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2 + 10),
+            segmentedControlContainer.heightAnchor.constraint(equalToConstant: 40)
+            
+        ])
+    }
+    
+    
     
     
     
