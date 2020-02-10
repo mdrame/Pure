@@ -185,10 +185,11 @@ class HomeViewController: UIViewController {
     // Timer button setup and constraints
     func timerButtonSetUP() {
         view.addSubview(timerButtonContiner)
+        
         // An array of constraints
         NSLayoutConstraint.activate(
             [
-                timerButtonContiner.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+                timerButtonContiner.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
                 timerButtonContiner.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
                 timerButtonContiner.widthAnchor.constraint(equalToConstant: view.frame.size.width / 7),
                 timerButtonContiner.heightAnchor.constraint(equalToConstant: 59)
@@ -199,10 +200,11 @@ class HomeViewController: UIViewController {
     // MARK: -> UISegmented Control
     /// This function establish and add the segmented control to the screen and set constraints
     lazy var segmentedControlContainer: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Morning", "AftrNoone", "Night"])
-        segmentedControl.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+        let segmentedControl = UISegmentedControl(items: ["Morning", "Noone", "Night"])
+       
+        segmentedControl.backgroundColor = #colorLiteral(red: 0.8999300599, green: 0, blue: 0.2961923778, alpha: 1)
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.selectedSegmentTintColor = #colorLiteral(red: 0.8999300599, green: 0, blue: 0.2961923778, alpha: 1)
+        segmentedControl.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         segmentedControl.isHidden = true // Hide segmented control as screen startes
         segmentedControl.translatesAutoresizingMaskIntoConstraints =  false
         return segmentedControl
@@ -214,15 +216,15 @@ class HomeViewController: UIViewController {
     
     func segmentedControlSetUP() {
         view.addSubview(segmentedControlContainer)
-        
+         
         NSLayoutConstraint.activate([
             // Center in view
 //            segmentedControlContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             segmentedControlContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             // Top Acher
-            segmentedControlContainer.topAnchor.constraint(equalToSystemSpacingBelow: timerButtonContiner.topAnchor, multiplier: 10),
+            segmentedControlContainer.topAnchor.constraint(equalTo: timerButtonContiner.topAnchor, constant: 0 ),
             // width and height
-            segmentedControlContainer.widthAnchor.constraint(equalToConstant: self.view.frame.size.width / 2 + 10),
+            segmentedControlContainer.widthAnchor.constraint(equalToConstant: view.frame.size.width / 2),
             segmentedControlContainer.heightAnchor.constraint(equalToConstant: 40)
             
         ])
