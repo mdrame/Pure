@@ -14,12 +14,43 @@ class HomeViewController: UIViewController {
     
     // MARK: -> Global Variables
     
+    var randomTimer : Int = Int()
+    
     var dataSet = DataSet()
+    
     /// Turing segmented control on and off base on the button press toggle switch ever time the button is pressed
     var buttonPress : Bool = true {
         willSet {
             segmentedControlContainer.isHidden = newValue
         }
+    }
+    
+    var computed: Int {
+        return 25
+    }
+    
+    // Create a property observer and to keep track of the segmented congroll life and save to coreData, in order to determine when to send the user a notification.
+    var segmentedControllerCurrentValue: Int = 0 {
+        didSet {
+            return self.segmentedControllerCurrentValue = oldValue
+        } willSet {
+            print("Segmented control on: \(newValue)")
+            return self.segmentedControllerCurrentValue = newValue
+        }
+    }
+    
+    
+    // Write a function that will select a random time zone base on morning = 0, afternoon = 1, and night = 2.
+    func randomTimeZoneSelection(input segmentedValue: Int)->Int {
+        // if segmentedvalue is 0, randomly picked a number between moring time zone, from
+        if segmentedValue == 0 {
+            randomTimer = Int.random(in: 6...12) // am morning
+        } else if segmentedValue == 1 {
+            randomTimer = Int.random(in: 6...12) // pm afternoon
+        } else if segmentedValue == 2 {
+            randomTimer = Int.random(in: 6...12) // pm midNight
+        }
+        return randomTimer
     }
     
     
@@ -33,10 +64,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        print("Seleted Time: \(randomTimer)")
         // MARK: -> View BackGroundColor.
         /// Background Color Base on specific unique colors patern / get Mechell input
-        self.view.backgroundColor = #colorLiteral(red: 0.06983517855, green: 0.07453668863, blue: 0.08315380663, alpha: 1)
+        self.view.backgroundColor = #colorLiteral(red: 0.1512203515, green: 0.1612353325, blue: 0.1522695124, alpha: 1)
         
         /// this function adds the button to the view and set constraints
         timerButtonSetUP()
@@ -55,9 +86,14 @@ class HomeViewController: UIViewController {
         /// save button animation
         shareButtonContainer.pulsate()
         
+        // This function select a random number base on the time.
+        randomTimeZoneSelection(input: segmentedControllerCurrentValue)
+        
         /// this function is creating notification base on user selected timmer or time zone.
-        //        userNotification()
-           
+                userNotification()
+        
+        
+        
     }
     
     
@@ -66,7 +102,7 @@ class HomeViewController: UIViewController {
     func quoteSelectionSetting(arrayOfQuotes ourList: Array<QuotesModel>) {
         // empty array of
         var usedQuote = [String]()
-        var randomObject = Int.random(in: 0..<ourList.count)
+        let randomObject = Int.random(in: 0..<ourList.count)
         print("Random Quoit Selected: \(randomObject)")
         
         // looping over entire list of quotes.
@@ -113,7 +149,7 @@ class HomeViewController: UIViewController {
         
         // Triger for notification
         // Time interver will be eqal to segmented control current value, segmented current value will be decided base on randomly selecting a time frame. example will be afternoon is b/w 1-50. trigger value will be base on a random value b/w that number.
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Double(randomTimer), repeats: false)
         
         
         // Combine identifier, content and trigger
@@ -163,8 +199,8 @@ class HomeViewController: UIViewController {
         
         
         buttonPress.toggle()
-        print("Segmented Bar is on: \(buttonPress)")
-       
+        print("Segmented Bar is hidden: \(buttonPress)")
+        
     }
     
     
@@ -187,25 +223,53 @@ class HomeViewController: UIViewController {
     /// This function establish and add the segmented control to the screen and set constraints
     lazy var segmentedControlContainer: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Morning", "Noone", "Night"])
-       
+        
         segmentedControl.backgroundColor = #colorLiteral(red: 0.8999300599, green: 0, blue: 0.2961923778, alpha: 1)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         segmentedControl.isHidden = true // Hide segmented control as screen startes
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(segmentedControlStateChange), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints =  false
         return segmentedControl
         
     }()
     
     
+    @objc func segmentedControlStateChange() {
+        switch segmentedControlContainer.selectedSegmentIndex {
+        case 0:
+            //            print("Segmented Control on Zero")
+            segmentedControllerCurrentValue = 0
+            // save variable value to coreData
+            break
+        case 1:
+            //        print("Segmented Control on One")
+            segmentedControllerCurrentValue = 1
+            // save variable value to coreData
+            break
+        case 2:
+            //        print("Segmented Control on Two")
+            segmentedControllerCurrentValue = 2
+            // save variable value to coreData
+            break
+        default:
+            print("Segmented Control on nothing!!")
+        }
+        
+        // selected time zone by user
+        print("user selected time zone: \(randomTimeZoneSelection(input: segmentedControllerCurrentValue))")
+    }
+    
+    
     
     
     func segmentedControlSetUP() {
         view.addSubview(segmentedControlContainer)
-         
+        
         NSLayoutConstraint.activate([
             // Center in view
-//            segmentedControlContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            //            segmentedControlContainer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             segmentedControlContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             // Top Acher
             segmentedControlContainer.topAnchor.constraint(equalTo: timerButtonContiner.topAnchor, constant: 0 ),
