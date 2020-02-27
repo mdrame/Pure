@@ -14,7 +14,8 @@ class HomeViewController: UIViewController {
     
     // MARK: -> Global Variables
     
-    var randomTimer : Int = Int()
+    /// this variable is set to a random time base timeZone selected on the segmentedControl
+    
     
     var dataSet = DataSet()
     
@@ -29,29 +30,30 @@ class HomeViewController: UIViewController {
         return 25
     }
     
-    // Create a property observer and to keep track of the segmented congroll life and save to coreData, in order to determine when to send the user a notification.
-    var segmentedControllerCurrentValue: Int = 0 {
-        didSet {
-            return self.segmentedControllerCurrentValue = oldValue
-        } willSet {
-            print("Segmented control on: \(newValue)")
-            return self.segmentedControllerCurrentValue = newValue
-        }
-    }
+    // Create a property observer that keep track of the segmented congroll life and save to coreData, in order to determine when to send the user a notification.
+    //    var segmentedControllerCurrentValue: Int = 0 {
+    //        didSet {
+    //            return self.segmentedControllerCurrentValue = oldValue
+    //        } willSet {
+    //            print("Segmented control on: \(newValue)")
+    //            return self.segmentedControllerCurrentValue = newValue
+    //        }
+    //    }
     
     
     // Write a function that will select a random time zone base on morning = 0, afternoon = 1, and night = 2.
-    func randomTimeZoneSelection(input segmentedValue: Int)->Int {
-        // if segmentedvalue is 0, randomly picked a number between moring time zone, from
-        if segmentedValue == 0 {
-            randomTimer = Int.random(in: 6...12) // am morning
-        } else if segmentedValue == 1 {
-            randomTimer = Int.random(in: 6...12) // pm afternoon
-        } else if segmentedValue == 2 {
-            randomTimer = Int.random(in: 6...12) // pm midNight
-        }
-        return randomTimer
-    }
+    //    func randomTimeZoneSelection(input segmentedValue: Int)->Int {
+    //        var randomTimeZone : Int = Int()
+    //        // if segmentedvalue is 0, randomly picked a number between moring time zone, from
+    //        if segmentedValue == 0 {
+    //            randomTimeZone = Int.random(in: 6...12) // am morning
+    //        } else if segmentedValue == 1 {
+    //            randomTimeZone = Int.random(in: 6...12) // pm afternoon
+    //        } else if segmentedValue == 2 {
+    //            randomTimeZone = Int.random(in: 6...12) // pm midNight
+    //        }
+    //        return randomTimeZone
+    //    }
     
     
     // random unique colors
@@ -64,17 +66,15 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        print("Seleted Time: \(randomTimer)")
+        
         // MARK: -> View BackGroundColor.
         /// Background Color Base on specific unique colors patern / get Mechell input
         self.view.backgroundColor = #colorLiteral(red: 0.1512203515, green: 0.1612353325, blue: 0.1522695124, alpha: 1)
+        print("Segmented index to be converted to Time: \(segMenRandomTime)")
         
         /// this function adds the button to the view and set constraints
         timerButtonSetUP()
-        
-        
         segmentedControlSetUP()
-        
         /// This function establish the label that the quiote will be in, under this funcrtion will be the label constraints
         motivationLabelSetUP()
         
@@ -86,11 +86,10 @@ class HomeViewController: UIViewController {
         /// save button animation
         shareButtonContainer.pulsate()
         
-        // This function select a random number base on the time.
-        randomTimeZoneSelection(input: segmentedControllerCurrentValue)
+        
         
         /// this function is creating notification base on user selected timmer or time zone.
-                userNotification()
+//        userNotification()
         
         
         
@@ -104,7 +103,6 @@ class HomeViewController: UIViewController {
         var usedQuote = [String]()
         let randomObject = Int.random(in: 0..<ourList.count)
         print("Random Quoit Selected: \(randomObject)")
-        
         // looping over entire list of quotes.
         for _ in ourList {
             // checking to see if the selected quote havent already been used.
@@ -118,10 +116,8 @@ class HomeViewController: UIViewController {
                 usedQuote.append(ourList[randomObject].quote)
                 print("Selected Quote: \(usedQuote)")
                 motivationLabelContainer.text = ourList[randomObject].quote
-                
             }
         }
-        
     }
     
     // MARK: -> UNNotification UserNotification
@@ -130,7 +126,6 @@ class HomeViewController: UIViewController {
         // Notification class
         let center = UNUserNotificationCenter.current()
         center.removeAllPendingNotificationRequests()
-        
         // Getting user approval
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (isGranted, error) in
             if isGranted {
@@ -149,7 +144,14 @@ class HomeViewController: UIViewController {
         
         // Triger for notification
         // Time interver will be eqal to segmented control current value, segmented current value will be decided base on randomly selecting a time frame. example will be afternoon is b/w 1-50. trigger value will be base on a random value b/w that number.
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: Double(randomTimer), repeats: false)
+        var dataComponents = DateComponents()
+        var hour = segMentedCurrentValue()!
+        dataComponents.hour = hour
+        print("Segmented index converted to time ♥️: \(hour) ")
+        dataComponents.minute = Int.random(in: 0...60)
+        print("Date:  \(dataComponents)")
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dataComponents, repeats: true)
+        //        UNTimeIntervalNotificationTrigger(timeInterval: Double(randomTimeZone), repeats: false)
         
         
         // Combine identifier, content and trigger
@@ -227,7 +229,7 @@ class HomeViewController: UIViewController {
         segmentedControl.backgroundColor = #colorLiteral(red: 0.8999300599, green: 0, blue: 0.2961923778, alpha: 1)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.selectedSegmentTintColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        segmentedControl.isHidden = true // Hide segmented control as screen startes
+        segmentedControl.isHidden = true // Hide segmented control as screen starts
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(segmentedControlStateChange), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints =  false
@@ -235,31 +237,28 @@ class HomeViewController: UIViewController {
         
     }()
     
-    
-    @objc func segmentedControlStateChange() {
-        switch segmentedControlContainer.selectedSegmentIndex {
-        case 0:
-            //            print("Segmented Control on Zero")
-            segmentedControllerCurrentValue = 0
-            // save variable value to coreData
-            break
-        case 1:
-            //        print("Segmented Control on One")
-            segmentedControllerCurrentValue = 1
-            // save variable value to coreData
-            break
-        case 2:
-            //        print("Segmented Control on Two")
-            segmentedControllerCurrentValue = 2
-            // save variable value to coreData
-            break
-        default:
-            print("Segmented Control on nothing!!")
-        }
-        
-        // selected time zone by user
-        print("user selected time zone: \(randomTimeZoneSelection(input: segmentedControllerCurrentValue))")
+    // Run time set up function here
+    var segMenRandomTime: Int = 0
+    @objc  func segmentedControlStateChange() {
+        print("Button State Change Detected")
+        userNotification()
     }
+    
+      /// This function check the current index of the segmented controller and return that index as an interger (Int) 😬.
+        func segMentedCurrentValue()-> Int? {
+            switch segmentedControlContainer.selectedSegmentIndex {
+            case 0:
+                return Int.random(in: 1..<12)
+            case 1:
+                return Int.random(in: 1..<6)
+            case 2:
+                return Int.random(in: 6..<12)
+            default:
+                print("Segmented Control Dont Exist")
+            }
+            return Int.random(in: 0..<12) // ramom Time in the moring because segment is on morning by default.
+            
+        }
     
     
     
@@ -280,6 +279,8 @@ class HomeViewController: UIViewController {
         ])
     }
     
+  
+//
     
     
     
@@ -412,4 +413,7 @@ extension HomeViewController {
     
     
 }
+
+
+
 
